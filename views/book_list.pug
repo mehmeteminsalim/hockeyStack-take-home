@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  - var badgeClassList = ["primary", "secondary", "success","danger", "warning", "info"]
+  .mt-3.mb-3
+    .row
+      each book in book_list
+        .col-3
+          a(href='#')
+            .card(style='width: 18rem;')
+              img.card-img-top(src='...' alt='...')
+              .card-body
+                each genre,index in book.genre
+                  span(class=`badge badge-${badgeClassList[index]} mx-1`) #{genre.name}
+                h5.card-text.text-dark
+                  |  #{book.title}
+
+
+

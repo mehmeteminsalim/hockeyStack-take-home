@@ -1,0 +1,15 @@
+link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css", integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z", crossorigin="anonymous")
+link(rel='stylesheet', href='/css/base.css')
+
+.flex-center-column.h-screen.w-screen
+    h3 #{title}
+        hr
+    form(method="POST" action="/auth/register")
+        .form-outline.mb-4
+            label.form-label(for='email') Email
+            input#email.form-control.form-control(type='email' name='email')
+        .form-outline.mb-4
+            label.form-label(for='password') Password
+            input#password.form-control.form-control(type='password' name='password')
+        button.btn.btn-primary.btn-block.mb-1(type='submit') Sign Up
+        a(href='/auth/login' class="btn btn-outline-secondary btn-block") Login
