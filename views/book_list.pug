@@ -20,7 +20,6 @@ block content
     .row.gap-3.d-flex.justify-content-center
       each book in book_list
           .card(style='width: 18rem;' class="mb-3 col-lg-3 col-md-3 col-sm-3 col-xs-6")
-            - console.log(book)
             img.card-img-top(src=book.cover_image  class="book-cover-img-contain")
             .card-body
               each genre,index in book.genre

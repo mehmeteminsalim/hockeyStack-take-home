@@ -25,7 +25,6 @@ module.exports = [
       });
     } else {
       User.findOne({ email: user.email }).exec(function (err, existingUser) {
-        console.log(existingUser);
         if(existingUser) {
           res.render("register", {
             errors: [{ msg: "That email address is already in use." }],
