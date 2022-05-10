@@ -17,15 +17,28 @@ module.exports = [
       password: passwordToHash(req.body.password),
     });
 
+   
+
     if (!errors.isEmpty()) {
       res.render("register", {
         errors: errors.array(),
       });
     } else {
-      user.save(function (err) {
-        if (err) return next(err);
-        res.redirect("/auth/login");
-      });
+      User.findOne({ email: user.email }).exec(function (err, existingUser) {
+        console.log(existingUser);
+        if(existingUser) {
+          res.render("register", {
+            errors: [{ msg: "That email address is already in use." }],
+          });
+        }
+        else{
+          user.save(function (err) {
+            if (err) return next(err);
+            res.redirect("/auth/login");
+          });
+        }
+      })
+    
     }
   },
 ];

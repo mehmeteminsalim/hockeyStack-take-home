@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 const path = require("path");
 dotenv.config({ path: path.join(__dirname, ".env") });
 
-const { MONGO_URI, PORT } = process.env;
+const { MONGO_URI, PORT , SESSION_SECRET } = process.env;
 
 const packageJson = require("./package.json");
 process.env.VERSION = packageJson.version;
@@ -22,7 +22,7 @@ const server = http.Server(app);
 
 // Set up mongoose connection
 const defaultURI =
-  "mongodb+srv://cooluser:coolpassword@cluster0.a9azn.mongodb.net/local_library?retryWrites=true";
+  "mongodb+srv://emin-hockeystack:Emin.1625@hockey-stack-interview.cme2r.mongodb.net/bookDatabase?retryWrites=true&w=majority";
 const mongoDB = MONGO_URI || defaultURI;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
@@ -41,7 +41,7 @@ app.set("view engine", "pug");
 app.use(
   session({
     key: "user_sid",
-    secret: "somerandonstuffs",
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {

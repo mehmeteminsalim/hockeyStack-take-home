@@ -8,6 +8,6 @@ module.exports = function (req, res, next) {
       return next(err);
     }
     // Success, so redirect to list of BookInstance items.
-    res.redirect("/bookinstances");
+    res.redirect("/book-instances");
   });
 };
