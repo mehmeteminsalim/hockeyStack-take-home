@@ -13,3 +13,9 @@ link(rel='stylesheet', href='/css/base.css')
             input#password.form-control.form-control(type='password' name='password')
         button.btn.btn-primary.btn-block.mb-1(type='submit') Sign Up
         a(href='/auth/login' class="btn btn-outline-secondary btn-block") Login
+
+if errors 
+  ul
+    for error in errors
+      li!= error.msg
+

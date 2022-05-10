@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const author_controller = require("../controllers/authorController");
 const createGetController = require("../controllers/authors/create-get");
 const createPostController = require("../controllers/authors/create-post");
 const deleteGetController = require("../controllers/authors/delete-get");
 const deletePostController = require("../controllers/authors/delete-post");
-const detailGetController = require("../controllers/authors/detail-get");
+const indexController = require("../controllers/authors/index");
 const listController = require("../controllers/authors/list");
 const updateGetController = require("../controllers/authors/update-get");
 const updatePostController = require("../controllers/authors/update-post");
@@ -30,7 +29,7 @@ router.get("/:id/update", updateGetController);
 router.post("/:id/update", updatePostController);
 
 // GET request for one Author.
-router.get("/:id", detailGetController);
+router.get("/:id", indexController);
 
 // GET request for list of all Authors.
 router.get("/", listController);

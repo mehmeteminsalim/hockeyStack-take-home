@@ -1,3 +1,7 @@
+const Author = require("../../models/Author");
+const async = require("async");
+const Book = require("../../models/Book");
+
 // Display Author delete form on GET.
 module.exports = function (req, res, next) {
     async.parallel(

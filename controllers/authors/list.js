@@ -1,3 +1,5 @@
+const Author = require("../../models/Author");
+
 // Display list of all Authors.
 module.exports = function (req, res, next) {
     Author.find()

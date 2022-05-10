@@ -1,3 +1,4 @@
+const Author = require("../../models/Author");
 const { body, validationResult } = require("express-validator");
 
 // Handle Author update on POST.

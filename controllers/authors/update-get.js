@@ -1,3 +1,5 @@
+const Author = require("../../models/Author");
+
 // Display Author update form on GET.
 module.exports = function (req, res, next) {
   Author.findById(req.params.id, function (err, author) {
