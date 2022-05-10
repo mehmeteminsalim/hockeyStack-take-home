@@ -3,6 +3,7 @@ const router = express.Router();
 
 // Require our controllers.
 const book_controller = require('../controllers/bookController');
+const { uploadCoverImage } = require('../middlewares/uploadCoverImage');
 
 // GET request for list of all Book.
 router.get('/', book_controller.book_list);
@@ -11,7 +12,7 @@ router.get('/', book_controller.book_list);
 router.get('/create', book_controller.book_create_get);
 
 // POST request for creating Book.
-router.post('/create', book_controller.book_create_post);
+router.post('/create',uploadCoverImage.single("coverImage"), book_controller.book_create_post);
 
 // GET request to delete Book.
 router.get('/:id/delete', book_controller.book_delete_get);

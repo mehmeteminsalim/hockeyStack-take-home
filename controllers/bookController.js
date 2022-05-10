@@ -73,12 +73,15 @@ exports.book_create_get = function (_req, res, next) {
 
 // Handle Book create on POST.
 exports.book_create_post = function (req, res, next) {
+console.log(req.file);
+
   const book = new Book({
     title: req.body.title,
     author: req.body.author,
     summary: req.body.summary,
     isbn: req.body.isbn,
     genre: req.body.genre,
+    cover_image: req.savedCoverImage,
   });
 
   book.save(function (err) {
