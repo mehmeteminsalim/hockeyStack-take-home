@@ -75,11 +75,6 @@ app.use("/book-instances",authChecker, bookInstanceRouter);
 app.use("/auth", authRouter);
 
 
-
-
-
-
-
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));

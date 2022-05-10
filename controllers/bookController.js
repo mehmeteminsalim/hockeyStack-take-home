@@ -36,6 +36,7 @@ exports.book_list_get = function (_req, res, next) {
   );
 };
 
+// Display list of all books with a filter
 exports.book_list_post = function (req, res, next) {
   parallel(
     {
@@ -48,8 +49,7 @@ exports.book_list_post = function (req, res, next) {
     },
     function (err, results) {
       if (err) return next(err);
-      var regexp = new RegExp(req.body.title);
-      console.log(req.body.author);
+      var titleRegexp = new RegExp(req.body.title);
 
       let query =
         req.body.author == "all"
@@ -59,7 +59,7 @@ exports.book_list_post = function (req, res, next) {
             };
 
       Book.find(
-        { title: regexp, ...query },
+        { title: titleRegexp, ...query },
         "title author genre cover_image summary"
       )
         .sort({ title: 1 })
@@ -219,20 +219,18 @@ exports.book_delete_post = function (req, res, next) {
           }
           if (results.book.cover_image !== "/uploads/defaultCover.png") {
             fs.unlink(deletePath, function (err) {
-              if (err) return console.log(err);
+              if (err) return next(err);
               Book.findByIdAndRemove(req.body.id, function deleteBook(err) {
                 if (err) return next(err);
                 res.redirect("/books");
               });
             });
-          }
-          else{
+          } else {
             Book.findByIdAndRemove(req.body.id, function deleteBook(err) {
               if (err) return next(err);
               res.redirect("/books");
             });
           }
-         
         });
       }
     }
@@ -284,7 +282,6 @@ exports.book_update_get = function (req, res, next) {
 
 // Handle Book update on POST.
 exports.book_update_post = function (req, res, next) {
-  console.log(req.savedCoverImage);
   const filePath =
     req?.savedCoverImage === undefined
       ? "/uploads/defaultCover.png"
@@ -306,5 +303,3 @@ exports.book_update_post = function (req, res, next) {
     res.redirect(bookRes.url);
   });
 };
-
-console.log(path.join(__dirname, "../", "public"));
