@@ -6,7 +6,7 @@ const book_controller = require('../controllers/bookController');
 const { uploadCoverImage } = require('../middlewares/uploadCoverImage');
 
 // GET request for list of all Book.
-router.get('/', book_controller.book_list);
+router.get('/', book_controller.book_list_get);
 
 // GET request for creating a Book. NOTE This must come before routes that display Book (uses id).
 router.get('/create', book_controller.book_create_get);

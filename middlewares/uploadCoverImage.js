@@ -20,6 +20,7 @@ const fileFilter = (req, file, cb) => {
   if (!allowedMimeTypes.includes(file.mimetype)) {
     return cb(new Error("Please provide a valid image file"), false);
   }
+
   return cb(null, true);
 };
 

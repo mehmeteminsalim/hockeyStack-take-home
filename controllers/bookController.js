@@ -6,15 +6,60 @@ const Author = require("../models/Author");
 const Genre = require("../models/Genre");
 
 // Display list of all Books.
-exports.book_list = function (_req, res, next) {
-  Book.find({}, "title author genre cover_image summary")
-    .sort({ title: 1 })
-    .populate("author genre")
-    .exec(function (err, listBooks) {
+exports.book_list_get = function (_req, res, next) {
+  parallel(
+    {
+      authors: function (callback) {
+        Author.find(callback);
+      },
+      genres: function (callback) {
+        Genre.find(callback);
+      },
+    },
+    function (err, results) {
       if (err) return next(err);
+      Book.find({}, "title author genre cover_image summary")
+        .sort({ title: 1 })
+        .populate("author genre")
+        .exec(function (err, listBooks) {
+          if (err) return next(err);
+          res.render("book_list", {
+            title: "Book List",
+            book_list: listBooks,
+            authors: results.authors,
+            genres: results.genres,
+          });
+        });
+    }
+  );
+};
 
-      res.render("book_list", { title: "Book List", book_list: listBooks });
-    });
+exports.book_list_post = function (_req, res, next) {
+  parallel(
+    {
+      authors: function (callback) {
+        Author.find(callback);
+      },
+      genres: function (callback) {
+        Genre.find(callback);
+      },
+    },
+    function (err, results) {
+      if (err) return next(err);
+      Book.find({}, "title author genre cover_image summary")
+        .sort({ title: 1 })
+        .populate("author genre")
+        .exec(function (err, listBooks) {
+          if (err) return next(err);
+          res.render("book_list", {
+            title: "Book List",
+            book_list: listBooks,
+            authors: results.authors,
+            genres: results.genres,
+          });
+        });
+    }
+  );
 };
 
 // Display detail page for a specific Book.
@@ -73,7 +118,11 @@ exports.book_create_get = function (_req, res, next) {
 
 // Handle Book create on POST.
 exports.book_create_post = function (req, res, next) {
-console.log(req.file);
+  console.log(req.file);
+  const filePath =
+    req?.savedCoverImage === undefined
+      ? "/uploads/defaultCover.png"
+      : "/uploads/" + req.savedCoverImage;
 
   const book = new Book({
     title: req.body.title,
@@ -81,7 +130,7 @@ console.log(req.file);
     summary: req.body.summary,
     isbn: req.body.isbn,
     genre: req.body.genre,
-    cover_image: "/uploads/" + req.savedCoverImage ,
+    cover_image: filePath,
   });
 
   book.save(function (err) {

@@ -32,10 +32,10 @@ block content
         - console.log(data)
         .list-group
           each book in data.latest_additions
-            a.list-group-item.list-group-item-action(href='#' aria-current='true')
+            a.list-group-item.list-group-item-action(href=`/books/${book._id}` aria-current='true')
               h5.mb-1 #{book.title}
               hr
-              p.mb-1 #{book.summary}
+              p.mb-1.book-summary-text #{book.summary}
               each genre,index in book.genre 
                 span(class=`badge bg-${badgeClassList[index]} mx-1 my-2`) #{genre.name}
 

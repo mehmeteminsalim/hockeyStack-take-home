@@ -3,10 +3,25 @@ extends layout
 block content
   - var badgeClassList = ["primary", "secondary", "success","danger", "warning", "info"]
   .mt-3.mb-3
+    .card.mb-3
+      .card-body
+        form(method='POST' action='')
+           div.form-group.mb-2
+              label(for='title') Title:
+              input#title.form-control(type='text', placeholder='Name of book' name='title')
+           div.form-group.mb-2
+              label(for='author') Author:
+              select#author.form-control(type='select', placeholder='Select author' name='author' required='true' )
+                - authors.sort(function(a, b) {let textA = a.family_name.toUpperCase(); let textB = b.family_name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+                for author in authors
+                  if book
+                    option(value=author._id selected=(author._id.toString()===book.author._id.toString() ? 'selected' : false) ) #{author.name}
+                  else
+                    option(value=author._id) #{author.name}          
     .row.gap-3.d-flex.justify-content-center
       each book in book_list
           .card(style='width: 18rem;' class="mb-3 col-lg-3 col-md-3 col-sm-3 col-xs-6")
-            img.card-img-top(src=book.cover_image  class="book-cover-img-cover")
+            img.card-img-top(src=book.cover_image  class="book-cover-img-contain")
             .card-body
               each genre,index in book.genre
                 span(class=`badge bg-${badgeClassList[index]} mx-1`) #{genre.name}
@@ -15,9 +30,9 @@ block content
                   |  #{book.title}
                 p.card-text.text-dark.mb-3.book-summary-text
                   | #{book.summary}
-              button.btn.btn-primary.btn-danger.w-100(type='button' data-bs-toggle='modal' data-bs-target='#bookDeletePopup' )
+              button.btn.btn-primary.btn-danger.w-100(type='button' data-bs-toggle='modal' data-bs-target=`#book-delete-${book._id}` )
                 | Delete
-              #bookDeletePopup.modal.fade(tabindex='-1' aria-labelledby='bookDeletePopupLabel' aria-hidden='true')
+              .modal.fade(id=`book-delete-${book._id}` tabindex='-1' aria-labelledby='bookDeletePopupLabel' aria-hidden='true')
                 form(method='POST' action=`/books/${book._id}/delete`)
                   .modal-dialog
                     .modal-content
