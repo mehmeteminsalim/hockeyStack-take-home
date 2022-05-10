@@ -5,15 +5,33 @@ block content
   .mt-3.mb-3
     .row
       each book in book_list
+        #{console.log(book)}
         .col-3
-          a(href='#')
-            .card(style='width: 18rem;')
-              img.card-img-top(src='...' alt='...')
-              .card-body
-                each genre,index in book.genre
-                  span(class=`badge badge-${badgeClassList[index]} mx-1`) #{genre.name}
-                h5.card-text.text-dark
+          .card(style='width: 18rem;')
+            img.card-img-top(src='https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg' alt='...')
+            .card-body
+              each genre,index in book.genre
+                span(class=`badge badge-${badgeClassList[index]} mx-1`) #{genre.name}
+              a(href=`/books/${book._id}`)
+                h5.card-text.text-dark.mb-3
                   |  #{book.title}
+              button.btn.btn-primary.btn-danger.w-100(type='button' data-toggle='modal' data-target='#bookDeletePopup' )
+                | Delete
+              #bookDeletePopup.modal.fade(tabindex='-1' aria-labelledby='bookDeletePopupLabel' aria-hidden='true')
+                form(method='POST' action=`/books/${book._id}/delete`)
+                  .modal-dialog
+                    .modal-content
+                      .modal-header
+                        h5#bookDeletePopupLabel.modal-title Delete Book
+                        button.close(type='button' data-dismiss='modal' aria-label='Close')
+                          span(aria-hidden='true') ×
+                      .modal-body
+                        | Are you sure you want to delete?
+                      .modal-footer
+                        button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+                        input#id(type='hidden' name='id' value=book._id)
+                        button.btn.btn-danger(type='submit') Delete
+
 
 
 
