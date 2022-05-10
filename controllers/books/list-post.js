@@ -1,6 +1,11 @@
+const async = require("async");
+const Author = require("../../models/Author");
+const Book = require("../../models/Book");
+const Genre = require("../../models/Genre");
+
 // Display list of all books with a filter
 module.exports = function (req, res, next) {
-  parallel(
+  async.parallel(
     {
       authors: function (callback) {
         Author.find(callback);

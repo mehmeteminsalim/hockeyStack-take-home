@@ -4,7 +4,7 @@ const Book = require("../../models/Book");
 const { body, validationResult } = require("express-validator");
 
 // Handle BookInstance create on POST.
-exports.bookinstance_create_post = [
+module.exports = [
   // Validate and sanitize fields.
   body("book", "Book must be specified").trim().isLength({ min: 1 }).escape(),
   body("imprint", "Imprint must be specified")

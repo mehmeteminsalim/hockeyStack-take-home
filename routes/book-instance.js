@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const createGetController = require("../controllers/authors/create-get");
-const createPostController = require("../controllers/authors/create-post");
-const deleteGetController = require("../controllers/authors/delete-get");
-const deletePostController = require("../controllers/authors/delete-post");
+const createGetController = require("../controllers/bookInstances/create-get");
+const createPostController = require("../controllers/bookInstances/create-post");
+const deleteGetController = require("../controllers/bookInstances/delete-get");
+const deletePostController = require("../controllers/bookInstances/delete-post");
 const updateGetController = require("../controllers/bookInstances/update-get");
-const updatePostController = require("../controllers/authors/update-post");
-const indexController = require("../controllers/authors/index");
-const listController = require("../controllers/authors/list");
+const updatePostController = require("../controllers/bookInstances/update-post");
+const indexController = require("../controllers/bookInstances/index");
+const listController = require("../controllers/bookInstances/list");
 
 // GET request for creating a BookInstance. NOTE This must come before route that displays BookInstance (uses id).
 router.get("/create", createGetController);
