@@ -23,7 +23,7 @@ module.exports = function (req, res, next) {
       Genre.countDocuments({}, callback);
     },
     latest_additions : function (callback) {
-      Book.find({}).sort({$natural:-1}).limit(3).exec(callback);
+      Book.find({}).sort({$natural:-1}).populate("genre").limit(3).exec(callback);
     }
   }, function (err, results) {
     res.render('index', { title: 'Local Library Home', error: err, data: results });

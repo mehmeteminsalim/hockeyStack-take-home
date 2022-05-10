@@ -1,11 +1,13 @@
 extends layout
 
 block content
+  
   h1(class="text-center")= title
   hr
   if error
     p Error getting dynamic content.
   else
+  - var badgeClassList = ["primary", "secondary", "success","danger", "warning", "info"]
     .row
       .col-md-6
         h3(class="mt-4") Record Counts
@@ -29,21 +31,11 @@ block content
         h3(class="mt-4") Latest Additions
         - console.log(data)
         .list-group
-          a.list-group-item.list-group-item-action(href='#' aria-current='true')
-            .d-flex.w-100.justify-content-between
-              h5.mb-1 List group item heading
-              small 3 days ago
-            p.mb-1 Some placeholder content in a paragraph.
-            small And some small print.
-          a.list-group-item.list-group-item-action(href='#')
-            .d-flex.w-100.justify-content-between
-              h5.mb-1 List group item heading
-              small.text-muted 3 days ago
-            p.mb-1 Some placeholder content in a paragraph.
-            small.text-muted And some muted small print.
-          a.list-group-item.list-group-item-action(href='#')
-            .d-flex.w-100.justify-content-between
-              h5.mb-1 List group item heading
-              small.text-muted 3 days ago
-            p.mb-1 Some placeholder content in a paragraph.
-            small.text-muted And some muted small print.
+          each book in data.latest_additions
+            a.list-group-item.list-group-item-action(href='#' aria-current='true')
+              h5.mb-1 #{book.title}
+              hr
+              p.mb-1 #{book.summary}
+              each genre,index in book.genre 
+                span(class=`badge bg-${badgeClassList[index]} mx-1 my-2`) #{genre.name}
+

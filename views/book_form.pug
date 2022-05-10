@@ -33,7 +33,7 @@ block content
       label(for='cover_image') Cover Image:
       input(type='file' name="coverImage" id="coverImage" accept="image/*")
       if undefined!==book && book.cover_image 
-        img(src=book.cover_image class="mt-2 mb-2")
+        img(src=book.cover_image class="mt-2 mb-2" style='width: 25%;height: 25%;')
     button.btn.btn-primary(type='submit') Submit
 
   if errors 
