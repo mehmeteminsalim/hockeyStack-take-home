@@ -4,10 +4,10 @@ block content
   h1= title
 
   form(method='POST' action='' enctype="multipart/form-data")
-    div.form-group
+    div.form-group.mb-2
       label(for='title') Title:
       input#title.form-control(type='text', placeholder='Name of book' name='title' required='true' value=(undefined===book ? '' : book.title) )
-    div.form-group
+    div.form-group.mb-2
       label(for='author') Author:
       select#author.form-control(type='select', placeholder='Select author' name='author' required='true' )
         - authors.sort(function(a, b) {let textA = a.family_name.toUpperCase(); let textB = b.family_name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
@@ -16,20 +16,20 @@ block content
             option(value=author._id selected=(author._id.toString()===book.author._id.toString() ? 'selected' : false) ) #{author.name}
           else
             option(value=author._id) #{author.name}
-    div.form-group
+    div.form-group.mb-2
       label(for='summary') Summary:
       input#summary.form-control(type='textarea', placeholder='Summary' name='summary' value=(undefined===book ? '' : book.summary) required='true')
-    div.form-group
+    div.form-group.mb-2
       label(for='isbn') ISBN:
       input#isbn.form-control(type='text', placeholder='ISBN13' name='isbn' value=(undefined===book ? '' : book.isbn) required='true') 
-    div.form-group
+    div.form-group.mb-2
       label Genre:
       div
         for genre in genres
           div(style='display: inline; padding-right:10px;')
             input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id, checked=genre.checked )
             label(for=genre._id) #{genre.name}
-    div.form-group.flex-column-start
+    div.form-group.flex-column-start.mb-2
       label(for='cover_image') Cover Image:
       input(type='file' name="coverImage" id="coverImage" accept="image/*")
       if undefined!==book && book.cover_image 

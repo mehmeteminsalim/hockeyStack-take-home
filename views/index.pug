@@ -1,21 +1,49 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #[em LocalLibrary], a very basic Express website developed as a tutorial example on the Mozilla Developer Network.
-
-
-  h1 Dynamic content
-
+  h1(class="text-center")= title
+  hr
   if error
     p Error getting dynamic content.
   else
-
-    p The library has the following record counts:
-
-    ul
-      li #[strong Books:] !{data.book_count}
-      li #[strong Copies:] !{data.book_instance_count}
-      li #[strong Copies available:] !{data.book_instance_available_count}
-      li #[strong Authors:] !{data.author_count}
-      li #[strong Genres:] !{data.genre_count}
+    .row
+      .col-md-6
+        h3(class="mt-4") Record Counts
+        ul.list-group
+          li.list-group-item.d-flex.justify-content-between.align-items-center
+            | #[strong Books:]
+            span.badge.bg-primary.rounded-pill !{data.book_count}
+          li.list-group-item.d-flex.justify-content-between.align-items-center
+            | #[strong Copies:]
+            span.badge.bg-primary.rounded-pill !{data.book_instance_count}
+          li.list-group-item.d-flex.justify-content-between.align-items-center
+            | #[strong Copies available:]
+            span.badge.bg-primary.rounded-pill !{data.book_instance_available_count}
+          li.list-group-item.d-flex.justify-content-between.align-items-center
+            | #[strong Authors:]
+            span.badge.bg-primary.rounded-pill !{data.author_count}
+          li.list-group-item.d-flex.justify-content-between.align-items-center
+            | #[strong Genres:]
+            span.badge.bg-primary.rounded-pill !{data.genre_count}
+      .col-md-6
+        h3(class="mt-4") Latest Additions
+        - console.log(data)
+        .list-group
+          a.list-group-item.list-group-item-action(href='#' aria-current='true')
+            .d-flex.w-100.justify-content-between
+              h5.mb-1 List group item heading
+              small 3 days ago
+            p.mb-1 Some placeholder content in a paragraph.
+            small And some small print.
+          a.list-group-item.list-group-item-action(href='#')
+            .d-flex.w-100.justify-content-between
+              h5.mb-1 List group item heading
+              small.text-muted 3 days ago
+            p.mb-1 Some placeholder content in a paragraph.
+            small.text-muted And some muted small print.
+          a.list-group-item.list-group-item-action(href='#')
+            .d-flex.w-100.justify-content-between
+              h5.mb-1 List group item heading
+              small.text-muted 3 days ago
+            p.mb-1 Some placeholder content in a paragraph.
+            small.text-muted And some muted small print.

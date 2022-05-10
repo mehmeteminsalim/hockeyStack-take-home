@@ -7,7 +7,7 @@ const Genre = require("../models/Genre");
 
 // Display list of all Books.
 exports.book_list = function (_req, res, next) {
-  Book.find({}, "title author genre")
+  Book.find({}, "title author genre cover_image summary")
     .sort({ title: 1 })
     .populate("author genre")
     .exec(function (err, listBooks) {
@@ -81,7 +81,7 @@ console.log(req.file);
     summary: req.body.summary,
     isbn: req.body.isbn,
     genre: req.body.genre,
-    cover_image: req.savedCoverImage,
+    cover_image: "/uploads/" + req.savedCoverImage ,
   });
 
   book.save(function (err) {

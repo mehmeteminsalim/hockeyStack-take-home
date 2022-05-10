@@ -3,19 +3,19 @@ extends layout
 block content
   - var badgeClassList = ["primary", "secondary", "success","danger", "warning", "info"]
   .mt-3.mb-3
-    .row
+    .row.gap-3.d-flex.justify-content-center
       each book in book_list
-        #{console.log(book)}
-        .col-3
-          .card(style='width: 18rem;')
-            img.card-img-top(src='https://static.vecteezy.com/packs/media/components/global/search-explore-nav/img/vectors/term-bg-1-666de2d941529c25aa511dc18d727160.jpg' alt='...')
+          .card(style='width: 18rem;' class="mb-3 col-lg-3 col-md-3 col-sm-3 col-xs-6")
+            img.card-img-top(src=book.cover_image  class="book-cover-img-cover")
             .card-body
               each genre,index in book.genre
-                span(class=`badge badge-${badgeClassList[index]} mx-1`) #{genre.name}
+                span(class=`badge bg-${badgeClassList[index]} mx-1`) #{genre.name}
               a(href=`/books/${book._id}`)
-                h5.card-text.text-dark.mb-3
+                h5.card-text.text-dark.mb-3.mt-2
                   |  #{book.title}
-              button.btn.btn-primary.btn-danger.w-100(type='button' data-toggle='modal' data-target='#bookDeletePopup' )
+                p.card-text.text-dark.mb-3.book-summary-text
+                  | #{book.summary}
+              button.btn.btn-primary.btn-danger.w-100(type='button' data-bs-toggle='modal' data-bs-target='#bookDeletePopup' )
                 | Delete
               #bookDeletePopup.modal.fade(tabindex='-1' aria-labelledby='bookDeletePopupLabel' aria-hidden='true')
                 form(method='POST' action=`/books/${book._id}/delete`)
@@ -23,14 +23,15 @@ block content
                     .modal-content
                       .modal-header
                         h5#bookDeletePopupLabel.modal-title Delete Book
-                        button.close(type='button' data-dismiss='modal' aria-label='Close')
-                          span(aria-hidden='true') ×
+                        button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
                       .modal-body
                         | Are you sure you want to delete?
                       .modal-footer
-                        button.btn.btn-secondary(type='button' data-dismiss='modal') Close
+                        button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Close
                         input#id(type='hidden' name='id' value=book._id)
                         button.btn.btn-danger(type='submit') Delete
+      else
+        li There are no books.
 
 
 

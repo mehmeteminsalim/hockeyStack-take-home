@@ -10,15 +10,11 @@ const BookSchema = new Schema({
   genre: [{ type: Schema.ObjectId, ref: "Genre" }],
   cover_image: {
     type: String,
-    default: "default_cover.jpg",
+    default: "/uploads/defaultCover.png",
   },
 });
 
 BookSchema.virtual("url").get(function () {
-  return "/books/" + this._id;
-});
-
-BookSchema.virtual("cover_image_url").get(function () {
   return "/books/" + this._id;
 });
 
