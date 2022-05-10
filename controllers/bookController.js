@@ -34,7 +34,7 @@ exports.book_list_get = function (_req, res, next) {
   );
 };
 
-exports.book_list_post = function (_req, res, next) {
+exports.book_list_post = function (req, res, next) {
   parallel(
     {
       authors: function (callback) {
@@ -46,11 +46,22 @@ exports.book_list_post = function (_req, res, next) {
     },
     function (err, results) {
       if (err) return next(err);
-      Book.find({}, "title author genre cover_image summary")
+      var regexp = new RegExp(req.body.title);
+      console.log(req.body.author);
+
+      let query = req.body.author == "all" ? {} : {
+        author: req.body.author
+      }
+
+      Book.find(
+        { title: regexp, ...query },
+        "title author genre cover_image summary"
+      )
         .sort({ title: 1 })
         .populate("author genre")
         .exec(function (err, listBooks) {
           if (err) return next(err);
+      
           res.render("book_list", {
             title: "Book List",
             book_list: listBooks,
@@ -118,7 +129,6 @@ exports.book_create_get = function (_req, res, next) {
 
 // Handle Book create on POST.
 exports.book_create_post = function (req, res, next) {
-  console.log(req.file);
   const filePath =
     req?.savedCoverImage === undefined
       ? "/uploads/defaultCover.png"
@@ -246,11 +256,18 @@ exports.book_update_get = function (req, res, next) {
 
 // Handle Book update on POST.
 exports.book_update_post = function (req, res, next) {
+  console.log(req.savedCoverImage);
+  const filePath =
+    req?.savedCoverImage === undefined
+      ? "/uploads/defaultCover.png"
+      : "/uploads/" + req.savedCoverImage;
+
   const book = new Book({
     title: req.body.title,
     author: req.body.author,
     summary: req.body.summary,
     isbn: req.body.isbn,
+    cover_image: filePath,
     genre: typeof req.body.genre === "undefined" ? [] : req.body.genre,
     _id: req.params.id,
   });

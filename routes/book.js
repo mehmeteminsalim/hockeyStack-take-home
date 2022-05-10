@@ -8,6 +8,9 @@ const { uploadCoverImage } = require('../middlewares/uploadCoverImage');
 // GET request for list of all Book.
 router.get('/', book_controller.book_list_get);
 
+// POST request for lists all books with a filter
+router.post('/', book_controller.book_list_post);
+
 // GET request for creating a Book. NOTE This must come before routes that display Book (uses id).
 router.get('/create', book_controller.book_create_get);
 
@@ -24,7 +27,7 @@ router.post('/:id/delete', book_controller.book_delete_post);
 router.get('/:id/update', book_controller.book_update_get);
 
 // POST request to update Book.
-router.post('/:id/update', book_controller.book_update_post);
+router.post('/:id/update',uploadCoverImage.single("coverImage"), book_controller.book_update_post);
 
 // GET request for one Book.
 router.get('/:id', book_controller.book_detail);

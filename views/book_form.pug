@@ -30,7 +30,7 @@ block content
             input.checkbox-input(type='checkbox', name='genre', id=genre._id, value=genre._id, checked=genre.checked )
             label(for=genre._id) #{genre.name}
     div.form-group.flex-column-start.mb-2
-      label(for='cover_image') Cover Image:
+      label(for='coverImage') Cover Image:
       input(type='file' name="coverImage" id="coverImage" accept="image/*")
       if undefined!==book && book.cover_image 
         img(src=book.cover_image class="mt-2 mb-2" style='width: 25%;height: 25%;')

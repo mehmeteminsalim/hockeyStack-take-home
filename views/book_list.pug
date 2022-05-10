@@ -5,19 +5,18 @@ block content
   .mt-3.mb-3
     .card.mb-3
       .card-body
-        form(method='POST' action='')
-           div.form-group.mb-2
-              label(for='title') Title:
-              input#title.form-control(type='text', placeholder='Name of book' name='title')
-           div.form-group.mb-2
-              label(for='author') Author:
-              select#author.form-control(type='select', placeholder='Select author' name='author' required='true' )
-                - authors.sort(function(a, b) {let textA = a.family_name.toUpperCase(); let textB = b.family_name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-                for author in authors
-                  if book
-                    option(value=author._id selected=(author._id.toString()===book.author._id.toString() ? 'selected' : false) ) #{author.name}
-                  else
-                    option(value=author._id) #{author.name}          
+        form(method='POST' action='/books')
+          div.form-group.mb-2
+             label(for='title') Title:
+             input#title.form-control(type='text', placeholder='Name of book' name='title')
+          div.form-group.mb-2
+             label(for='author') Author:
+             select#author.form-control(type='select', placeholder='Select author' name='author' required='true' )
+              - authors.sort(function(a, b) {let textA = a.family_name.toUpperCase(); let textB = b.family_name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+              option(value="all") All Authors 
+              for author in authors
+               option(value=author._id) #{author.name}  
+          button.btn.btn-primary(type='submit') Filter      
     .row.gap-3.d-flex.justify-content-center
       each book in book_list
           .card(style='width: 18rem;' class="mb-3 col-lg-3 col-md-3 col-sm-3 col-xs-6")
