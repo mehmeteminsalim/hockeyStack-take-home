@@ -1,4 +1,6 @@
 const { parallel } = require("async");
+const fs = require("fs");
+const path = require("path");
 
 const Book = require("../models/Book");
 const BookInstance = require("../models/BookInstance");
@@ -49,9 +51,12 @@ exports.book_list_post = function (req, res, next) {
       var regexp = new RegExp(req.body.title);
       console.log(req.body.author);
 
-      let query = req.body.author == "all" ? {} : {
-        author: req.body.author
-      }
+      let query =
+        req.body.author == "all"
+          ? {}
+          : {
+              author: req.body.author,
+            };
 
       Book.find(
         { title: regexp, ...query },
@@ -61,7 +66,7 @@ exports.book_list_post = function (req, res, next) {
         .populate("author genre")
         .exec(function (err, listBooks) {
           if (err) return next(err);
-      
+
           res.render("book_list", {
             title: "Book List",
             book_list: listBooks,
@@ -194,6 +199,13 @@ exports.book_delete_post = function (req, res, next) {
     function (err, results) {
       if (err) return next(err);
 
+      let deletePath = path.join(
+        __dirname,
+        "../",
+        "public",
+        results.book.cover_image
+      );
+
       if (results.bookInstances.length > 0) {
         res.render("book_delete", {
           title: "Delete Book",
@@ -201,10 +213,26 @@ exports.book_delete_post = function (req, res, next) {
           book_instances: results.bookInstances,
         });
       } else {
-        Book.findByIdAndRemove(req.body.id, function deleteBook(err) {
-          if (err) return next(err);
-
-          res.redirect("/books");
+        fs.stat(deletePath, function (err, stats) {
+          if (err) {
+            return next(new Error(err));
+          }
+          if (results.book.cover_image !== "/uploads/defaultCover.png") {
+            fs.unlink(deletePath, function (err) {
+              if (err) return console.log(err);
+              Book.findByIdAndRemove(req.body.id, function deleteBook(err) {
+                if (err) return next(err);
+                res.redirect("/books");
+              });
+            });
+          }
+          else{
+            Book.findByIdAndRemove(req.body.id, function deleteBook(err) {
+              if (err) return next(err);
+              res.redirect("/books");
+            });
+          }
+         
         });
       }
     }
@@ -278,3 +306,5 @@ exports.book_update_post = function (req, res, next) {
     res.redirect(bookRes.url);
   });
 };
+
+console.log(path.join(__dirname, "../", "public"));
